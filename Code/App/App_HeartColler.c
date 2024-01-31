@@ -1,16 +1,12 @@
-<<<<<<< HEAD
-#include "Application.h"
-#include "Debug.h"
-=======
 #include "App_HeartColler.h"
 #include "Debug.h"
-static uint16_t heart_duration;  // ²ÉÑùÊ±³¤ms
-static uint16_t heart_collectMS; // ¶àÉÙmsÖ´ÐÐÒ»´Î²ÉÑù
-static uint16_t tim7_count;      // ¶¨Ê±Æ÷ÖÐ¶Ï´ÎÊý
+static uint16_t heart_duration;  // ²ÉÑùÊ±³¤
+static uint16_t heart_collectMS; // ¶àÉÙms½øÐÐ1´Î²ÉÑù
+static uint16_t tim7_count;      // ÖÐ¶Ï´ÎÊý
 uint8_t isToReadAdcV = 0;
 /**
- * @brief ¿ªÊ¼²É¼¯ÐÄµçÍ¼
- *
+ * @brief ¿ªÊ¼º¯Êý
+ * 
  * @param rate ²ÉÑùÂÊ
  * @param duraion ²ÉÑùÊ±³¤
  */
@@ -24,8 +20,8 @@ void APP_HeartCollect_Start(uint16_t rate, uint16_t duraion)
     Dri_TIM7_Start();
 }
 /**
- * @brief Í£Ö¹²É¼¯ÐÄµçÍ¼
- *
+ * @brief ½áÊøº¯Êý
+ * 
  */
 void APP_HeartCollect_Stop(void)
 {
@@ -47,7 +43,7 @@ void TIM7_UpInterruptCallBuck(void)
     }
 }
 /**
- * @brief ¶ÁÈ¡ÐÄµçÊý¾Ý¼´ADCµÄÖµ
+ * @brief ¶ÁÈ¡ÐÄµçÊý¾Ý
  *
  * @return uint16_t
  */
@@ -58,4 +54,3 @@ uint16_t APP_HeartCollect_ReadHeartData(void)
     isToReadAdcV = 0;
     return Dri_ADC1_GetValue();
 }
->>>>>>> 994a28c (æ°´è´¨æ£€æµ‹é¡¹ç›®)

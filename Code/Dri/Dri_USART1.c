@@ -2,9 +2,9 @@
 
 void Dri_USART1_Init()
 {
-    /*ä¸¤ä¸ªå¼•è„šçš„æ—¶é’Ÿ*/
+    /*Á½¸öÒı½ÅµÄÊ±ÖÓ*/
     RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-    /*ä¸²å£çš„æ—¶é’Ÿ*/
+    /*´®¿ÚµÄÊ±ÖÓ*/
     RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 
     GPIOA->CRH |= GPIO_CRH_CNF9_1; 
@@ -14,26 +14,26 @@ void Dri_USART1_Init()
     GPIOA->CRH &= ~GPIO_CRH_CNF10_1;
     GPIOA->CRH |= GPIO_CRH_CNF10_0;
     GPIOA->CRH &= ~GPIO_CRH_MODE10;
-    /*æ³¢ç‰¹ç‡çš„è®¾ç½®*/
+    /*²¨ÌØÂÊµÄÉèÖÃ*/
     USART1->BRR |= 0x271;
-    /*å‘é€8ä¸ªæ¯”ç‰¹*/
+    /*·¢ËÍ8¸ö±ÈÌØ*/
     USART1->CR1 &= ~USART_CR1_M;
-    /*ä¸éœ€è¦æ£€éªŒä½*/
+    /*²»ĞèÒª¼ìÑéÎ»*/
     USART1->CR1 &= ~USART_CR1_PCE;
-    /*ç»ˆæ­¢ä½æ˜¯ä¸€ä¸ªbit*/
+    /*ÖÕÖ¹Î»ÊÇÒ»¸öbit*/
     USART1->CR2 &= ~USART_CR2_STOP;
-    /*ä¸²å£å‘é€ä½¿èƒ½*/
+    /*´®¿Ú·¢ËÍÊ¹ÄÜ*/
     USART1->CR1 |= USART_CR1_TE;
-    /*ä¸²å£æ”¶å–ä½¿èƒ½*/
+    /*´®¿ÚÊÕÈ¡Ê¹ÄÜ*/
     USART1->CR1 |= USART_CR1_RE;
 
 
-    /*ä¸²å£å…¨éƒ¨çš„ä¸­æ–­*/
+    /*´®¿ÚÈ«²¿µÄÖĞ¶Ï*/
 
-    /*æ”¶åˆ°ä¸€ä¸ªå­—èŠ‚çš„ä¸­æ–­*/
+    /*ÊÕµ½Ò»¸ö×Ö½ÚµÄÖĞ¶Ï*/
     USART1->CR1 |= USART_CR1_RXNEIE;
 
-    /*æŸ¥çœ‹åˆ°ç©ºç™½å¸§çš„ä¸­æ–­*/
+    /*²é¿´µ½¿Õ°×Ö¡µÄÖĞ¶Ï*/
     USART1->CR1 |= USART_CR1_IDLEIE;
 
 
@@ -41,17 +41,17 @@ void Dri_USART1_Init()
 
     NVIC_SetPriority(USART1_IRQn, 2);
 
-    /*å…¨éƒ¨çš„ä¸­æ–­æ˜¯ç”±nvicæ¥çš„ã€‚*/
+    /*È«²¿µÄÖĞ¶ÏÊÇÓÉnvicÀ´µÄ¡£*/
     NVIC_EnableIRQ(USART1_IRQn);
 
     
 }
 void Dri_USART1_Start(void){
-    /*ä¸²å£ä½¿èƒ½*/
+    /*´®¿ÚÊ¹ÄÜ*/
     USART1->CR1 |= USART_CR1_UE;
 }
 void Dri_USART1_Stop(void){
-    /*ä¸²å£ä½¿èƒ½*/
+    /*´®¿ÚÊ¹ÄÜ*/
     USART1->CR1 &= ~USART_CR1_UE;
 }
 void Dri_USART1_Sendchar(uint8_t byte)
@@ -73,7 +73,7 @@ void Dri_USART1_SendStr(uint8_t *str, uint8_t len)
 
 uint8_t Dri_USART1_ReceiveChar()
 {
-    /*çœ‹çœ‹æ˜¯å¦é‡Œé¢æ˜¯ç©ºçš„,ç”¨ä¸­æ–­*/
+    /*¿´¿´ÊÇ·ñÀïÃæÊÇ¿ÕµÄ,ÓÃÖĞ¶Ï*/
     while ((USART1->SR & USART_SR_RXNE) == 0)
         ;
     return USART1->DR;
@@ -84,7 +84,7 @@ void Dri_USART1_ReceiveStr(uint8_t *str, uint8_t *len)
 {
     uint8_t i = 0;
     while (1) {
-        /*åœ¨æ²¡æœ‰æ”¶åˆ°æ•°æ®ä¹‹å‰ï¼Œå°±ä¸æ–­æ£€æµ‹æ˜¯å¦æ˜¯ç©ºé—²çš„*/
+        /*ÔÚÃ»ÓĞÊÕµ½Êı¾İÖ®Ç°£¬¾Í²»¶Ï¼ì²âÊÇ·ñÊÇ¿ÕÏĞµÄ*/
 
         while ((USART1->SR & USART_SR_RXNE) == 0) {
             if (USART1->SR & USART_SR_IDLE) {
@@ -92,7 +92,7 @@ void Dri_USART1_ReceiveStr(uint8_t *str, uint8_t *len)
             }
         }
 
-        /*å¦‚æœæœ‰æ•°æ®çš„è¯å°±è¿”å›*/
+        /*Èç¹ûÓĞÊı¾İµÄ»°¾Í·µ»Ø*/
         str[i] = USART1->DR;
         i++;
         *len = i;
@@ -103,26 +103,26 @@ __weak void USART1_Callback(uint8_t buff[], uint8_t len) {}
 
 uint8_t buff[100] = {0};
 uint8_t len       = 0;
-/*ä¸­æ–­å‡½æ•°
-åœ¨ä¸­æ–­å‡½æ•°ä¸­å®Œæˆæ‰€æœ‰çš„æ”¶å–å’Œå‘é€*/
+/*ÖĞ¶Ïº¯Êı
+ÔÚÖĞ¶Ïº¯ÊıÖĞÍê³ÉËùÓĞµÄÊÕÈ¡ºÍ·¢ËÍ*/
 void USART1_IRQHandler(void)
 {
     if ((USART1->SR & USART_SR_RXNE)) {
-        buff[len] = USART1->DR; // å¤ä½æ ‡å¿—ä½
+        buff[len] = USART1->DR; // ¸´Î»±êÖ¾Î»
         len++;
 
     } else if ((USART1->SR & USART_SR_IDLE)) {
-        /*ç©ºé—²çš„æ—¶å€™ï¼Œå°±å‘é€å®Œæ¯•äº†ï¼Œè¿™ä¸ªæ—¶å€™å°±éœ€è¦å‘é€äº†,éœ€è¦å¤ä½æ ‡å¿—ä½*/
+        /*¿ÕÏĞµÄÊ±ºò£¬¾Í·¢ËÍÍê±ÏÁË£¬Õâ¸öÊ±ºò¾ÍĞèÒª·¢ËÍÁË,ĞèÒª¸´Î»±êÖ¾Î»*/
         USART1->SR;
-        USART1->DR;//æ¸…é›¶ä¸­æ–­æ ‡å¿—ä½
+        USART1->DR;//ÇåÁãÖĞ¶Ï±êÖ¾Î»
 
-        /*å‘é€æ‰€æ”¶åˆ°çš„æ•°æ®*/
+        /*·¢ËÍËùÊÕµ½µÄÊı¾İ*/
         USART1_Callback(buff, len);
         len = 0;
     }
 }
 
-/*é‡å®šå‘printf()ï¼Œå› ä¸ºprintf()åº•å±‚æ˜¯è°ƒç”¨äº†fputcæ¥ç”¨çš„*/
+/*ÖØ¶¨Ïòprintf()£¬ÒòÎªprintf()µ×²ãÊÇµ÷ÓÃÁËfputcÀ´ÓÃµÄ*/
 
 int fputc(int ch, FILE *file)
 {

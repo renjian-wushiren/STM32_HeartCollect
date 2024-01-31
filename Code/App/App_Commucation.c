@@ -1,29 +1,26 @@
 #include "App_Commucation.h"
-<<<<<<< HEAD
-#include "Debug.h"
-=======
 #include "Debug.h"
 #include <string.h>
-uint8_t recRete[10] = {0}; // ÓÃÓÚ½ÓÊÕ²ÉÑùÂÊ
-uint8_t recDura[10] = {0}; // ÓÃÓÚ½ÓÊÕ²ÉÑùÊ±¼ä
-uint8_t isRecSussed = 0;   // ½ÓÊÕÊÇ·ñÍê³ÉµÄ±êÖ¾
+uint8_t recRete[10] = {0}; // ½ÓÊÕ²ÉÑùÂÊ
+uint8_t recDura[10] = {0}; // ½ÓÊÕ²ÉÑùÊ±³¤
+uint8_t isRecSussed = 0;   // ÊÇ·ñ½ÓÊÕ³É¹¦
 /**
- * @brief ÖØÐ´USART1µÄ»Øµ÷º¯Êý
+ * @brief 
  *
- * @param buf »º³åÇøÊý×é
- * @param len »º³åÇø³¤¶È
+ * @param buf »º´æÊý×é
+ * @param len ³¤¶È
  */
 void USART1_Callback(uint8_t buff[], uint8_t len)
 {
-    if (buff[0] == 's') { // ²ÉÑùÂÊ½ÓÊÕÍê±Ï
+    if (buff[0] == 's') { 
         memcpy(recRete, &buff[1], len - 2);
-    } else if (buff[0] == 'c') { // ²ÉÑùÊ±³¤½ÓÊÕÍê±Ï
+    } else if (buff[0] == 'c') { // ???????¡è????????
         memcpy(recDura, &buff[1], len - 2);
         isRecSussed = 1;
     }
 }
 /**
- * @brief ÉÏÎ»»úÓëÏÂÎ»»úµÄÍ¨Ñ¶³õÊ¼»¯
+ * @brief ³õÊ¼»¯
  * 
  */
 void App_Commucation_Init(void)
@@ -31,7 +28,7 @@ void App_Commucation_Init(void)
     Dri_USART1_Init();
 }
 /**
- * @brief ÉÏÎ»»úÓëÏÂÎ»»úµÄÍ¨Ñ¶¿ªÊ¼
+ * @brief ¿ªÊ¼º¯Êý
  * 
  */
 void App_Commucation_Start(void)
@@ -39,7 +36,7 @@ void App_Commucation_Start(void)
     Dri_USART1_Start();
 }
 /**
- * @brief ÉÏÎ»»úÓëÏÂÎ»»úµÄÍ¨Ñ¶½áÊø
+ * @brief ½áÊøº¯Êý
  * 
  */
 void App_Commucation_Stop(void)
@@ -59,4 +56,3 @@ void App_Commucation_SendData(uint16_t data)
     sprintf((char *)sendBuf, "%d", data);
     Dri_USART1_SendStr(sendBuf, strlen((char *)sendBuf));
 }
->>>>>>> 994a28c (æ°´è´¨æ£€æµ‹é¡¹ç›®)

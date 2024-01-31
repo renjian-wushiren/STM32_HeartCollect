@@ -3,11 +3,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-<<<<<<< HEAD
-#include "Dri_USART.h"
-=======
 #include "Dri_USART1.h"
->>>>>>> 994a28c (水质检测项目)
 
 #define DEBUG
 #ifdef DEBUG

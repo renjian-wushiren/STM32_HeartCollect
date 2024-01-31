@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-
-int main()
-{
-    
-    while (1) {
-=======
 #include "Debug.h"
 #include "App_Commucation.h"
 #include "App_HeartColler.h"
@@ -21,6 +14,5 @@ int main()
     while (1) {
         uint16_t heartData = APP_HeartCollect_ReadHeartData();
         App_Commucation_SendData(heartData);
->>>>>>> 994a28c (水质检测项目)
     }
 }

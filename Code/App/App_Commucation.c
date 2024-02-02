@@ -14,7 +14,7 @@ void USART1_Callback(uint8_t buff[], uint8_t len)
 {
     if (buff[0] == 's') { 
         memcpy(recRete, &buff[1], len - 2);
-    } else if (buff[0] == 'c') { // ???????ก่????????
+    } else if (buff[0] == 'c') { 
         memcpy(recDura, &buff[1], len - 2);
         isRecSussed = 1;
     }
@@ -50,9 +50,9 @@ void App_Commucation_CommandProcess(uint16_t *rate, uint16_t *duration)
     *rate = atoi((char *)recRete);
     *duration = atoi((char *)recDura);
 }
-uint8_t sendBuf[10] = {0};
+uint8_t sendBuf[5] = {0};
 void App_Commucation_SendData(uint16_t data)
 {
-    sprintf((char *)sendBuf, "%d", data);
+    sprintf((char *)sendBuf, "%04lu\n", data);
     Dri_USART1_SendStr(sendBuf, strlen((char *)sendBuf));
 }

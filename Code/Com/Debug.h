@@ -5,7 +5,7 @@
 #include <string.h>
 #include "Dri_USART1.h"
 
-#define DEBUG
+// #define DEBUG
 #ifdef DEBUG
 #define debug_init() Debug_Init()
 #define FILENAME (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)

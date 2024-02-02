@@ -1,19 +1,19 @@
 #include "App_HeartColler.h"
 #include "Debug.h"
-static uint16_t heart_duration;  // 采样时长
-static uint16_t heart_collectMS; // 多少ms进行1次采样
-static uint16_t tim7_count;      // 中断次数
-uint8_t isToReadAdcV = 0;
+static uint16_t heart_duration; // 采样时长
+static uint16_t heart_rate;   // 采样率
+volatile uint8_t isToReadAdcV = 0;
 /**
  * @brief 开始函数
- * 
+ *
  * @param rate 采样率
  * @param duraion 采样时长
  */
 void APP_HeartCollect_Start(uint16_t rate, uint16_t duraion)
 {
-    heart_duration  = duraion * 1000;
-    heart_collectMS = 1000 / rate;
+    heart_duration = duraion * 1000;
+    heart_rate     = 1000 * 60 /rate;
+    debug_printfln("heart_duration:%d,heart_rate:%d", heart_duration, heart_rate);
     Dri_ADC1_Init();
     Dri_ADC1_Start();
     Dri_TIM7_Init();
@@ -21,7 +21,7 @@ void APP_HeartCollect_Start(uint16_t rate, uint16_t duraion)
 }
 /**
  * @brief 结束函数
- * 
+ *
  */
 void APP_HeartCollect_Stop(void)
 {
@@ -31,14 +31,15 @@ void APP_HeartCollect_Stop(void)
  * @brief
  *
  */
-void TIM7_UpInterruptCallBuck(void)
+void TIM7_UpInterruptCallBuck(int32_t mscount)
 {
-    tim7_count++;
-    if (tim7_count >= heart_duration) {
+    
+    if (mscount >= heart_duration) {
         Dri_TIM7_Stop();
-        return;
+        Dri_ADC1_Stop();
     }
-    if (tim7_count % heart_collectMS == 0) {
+    if ((mscount % heart_rate) == 0) {
+        debug_printfln("mscount:%ld", mscount);
         isToReadAdcV = 1;
     }
 }

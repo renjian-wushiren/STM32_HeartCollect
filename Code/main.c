@@ -1,7 +1,6 @@
 #include "Debug.h"
 #include "App_Commucation.h"
 #include "App_HeartColler.h"
-extern uint8_t isToReadAdcV;
 int main()
 {
     App_Commucation_Init();
@@ -14,6 +13,7 @@ int main()
     APP_HeartCollect_Start(rate,duration);
     while (1) {
         uint16_t heartData = APP_HeartCollect_ReadHeartData();
+        // debug_printfln("heartData = %d",heartData);
         App_Commucation_SendData(heartData);
     }
 }

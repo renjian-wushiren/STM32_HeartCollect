@@ -15,14 +15,14 @@ void Dri_TIM7_Init(void)
     /*
     3. 设置自动重转载寄存器的值，决定中断发生的频率。
         假设设置为9999，表示计数器计数10000次发生一次中断。
-        计数一次100us，10000次1000000us，正好1s
+        计数一次100us，10次1000us，正好1ms
     */
     TIM7->ARR = 10 - 1;
 
     /* 为了避免一启动立即进入更新中断,可以先产生一个更新事件 */
-    TIM7->CR1 |= TIM_CR1_URS;
+    // TIM7->CR1 |= TIM_CR1_URS;
     TIM7->EGR |= TIM_EGR_UG; /* 预分频寄存器和重装载寄存器的值更新到影子寄存器 */
-    // TIM6->SR &= ~TIM_SR_UIF;
+    TIM7->SR &= ~TIM_SR_UIF;
     
     /* 4. 使能更新中断 */
     TIM7->DIER |= TIM_DIER_UIE;
@@ -55,14 +55,15 @@ void Dri_TIM7_Stop(void)
  * 
  * @return __weak 
  */
-__weak void TIM7_UpInterruptCallBuck(void) {}
-
+__weak void TIM7_UpInterruptCallBuck(uint32_t mscount) {}
+uint32_t mscount = 0;
 /**
  * @description: TIM6的中断服务函数
  * @return {*}
  */
-void TIM6_IRQHandler(void)
+void TIM7_IRQHandler(void)
 {
     TIM7->SR &= ~TIM_SR_UIF;
-    TIM7_UpInterruptCallBuck();
+    mscount++;
+    TIM7_UpInterruptCallBuck(mscount);
 }
